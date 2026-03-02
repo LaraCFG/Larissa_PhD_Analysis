@@ -29,11 +29,11 @@ library(DescTools)
 
 # ---------- User paths ----------
 paths <- list(
-  field = "C:/Users/larac/Desktop/3rd Year Report_PhD/AllData_ForR/field_clean.csv",
-  mls   = "C:/Users/larac/Desktop/3rd Year Report_PhD/AllData_ForR/mls_3dfin_all.csv",
-  tls   = "C:/Users/larac/Desktop/3rd Year Report_PhD/AllData_ForR/tls_3dfin_all.csv",
-  stripes_dir = "C:/Users/larac/Desktop/3rd Year Report_PhD/AllData_ForR/TLS_StemStripes_Tables",
-  out_dir = "C:/Users/larac/Desktop/3rd Year Report_PhD/R_outputs_27Feb_V3"
+  field = "field_clean.csv",
+  mls   = "mls_3dfin_all.csv",
+  tls   = "tls_3dfin_all.csv",
+  stripes_dir = "TLS_StemStripes_Tables",
+  out_dir = "/R_outputs"
 )
 
 dir.create(paths$out_dir, showWarnings = FALSE, recursive = TRUE)
@@ -176,7 +176,7 @@ match_xy_one_to_one <- function(query_df, ref_df,
 # ============================================================
 # Chunk 2 — Read + standardize Field / MLS / TLS tables
 # Description:
-# Imports the datasets and harmonizes variable names/types.
+# Imports the datasets and harmonizes variable names.
 # Converts 3DFin DBH from meters to centimeters.
 # ============================================================
 
@@ -677,7 +677,7 @@ plot_xy_5stands_centered <- function(df, x, y, xlab, ylab, title,
                                      free_scales = FALSE,
                                      add_lm = TRUE) {
   
-  # keep only finite pairs for plotting/stats
+  # keep only finite pairs for plotting and stats
   df <- df %>% dplyr::filter(is.finite(.data[[x]]), is.finite(.data[[y]]))
   if (nrow(df) == 0) return(NULL)
   
@@ -761,7 +761,7 @@ plot_mapdist_5stands_centered <- function(df,
 }
 
 # Generic facet plot function (for variable number of stands)
-# ncol can be set per figure (e.g., 2 for 4 panels, 3 for 3 panels in one row)
+# ncol can be set per figure 
 plot_xy_facet <- function(df, x, y, xlab, ylab, title,
                           free_scales = FALSE,
                           add_lm = TRUE,
@@ -1517,7 +1517,6 @@ sens_summary <- mc_mls_tls_sens_long %>%
 
 readr::write_csv(sens_summary, file.path(paths$out_dir, "mc_sensitivity_summary_ciwidth.csv"))
 
-#Plots
 
 # ============================================================
 # FIGURES — Sensitivity analysis
@@ -1659,4 +1658,5 @@ print(p_sens_box)
 # - Regression tables are exported in publication-ready format (one row per model).
 # - Monte Carlo volume uncertainty outputs include mean, lower (2.5%), and upper (97.5%) CI columns.
 # Done.
+
 
